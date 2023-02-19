@@ -73,3 +73,9 @@ Semua setingan basic sudah selesai. Install react dan setup tailwind sebagai fra
 ****
 ****
 ****
+
+
+# Library tambahan yang di install:
+* react-router-dom
+* axios for load api
+* react-icon
