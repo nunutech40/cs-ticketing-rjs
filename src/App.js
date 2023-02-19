@@ -2,7 +2,7 @@ import './App.css';
 import React, { useReducer, createContext } from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/home";
-import Login from "./components/auth";
+import Login from "./components/auth/login";
 
 //Context
 export const AuthContext = createContext()
@@ -16,8 +16,6 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-    console.log("cek action ")
-    console.log(action.type)
     switch(action.type) {
         case "LOGIN":
             localStorage.setItem("token", JSON.stringify(action.payload.data.data.access_token))
@@ -45,9 +43,11 @@ function App() {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     console.log("cek run app  state")
-    console.log(state.isAuthenticated)
-    console.log(state.role)
-    console.log(state.token)
+    console.log(state.isAuthenticated);
+    console.log(state.role);
+    console.log(state.token);
+    console.log("cek dispatch: " + dispatch);
+
 
     return (
         <Router forceRefresh={true}>

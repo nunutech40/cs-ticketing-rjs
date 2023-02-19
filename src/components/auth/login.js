@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const api = 'http://127.0.0.1:8000/api/';
 
 
-
 export default function Login(props) {
 
     const { dispatch } = useContext(AuthContext)
@@ -19,16 +18,9 @@ export default function Login(props) {
     }, []);
 
 
+    const initialState = { isSubmitting: false, errorMessage: null}
 
-    const initialState = {
-        isSubmitting: false,
-        errorMessage: null
-    }
-
-    const stateForm = {
-        email: "",
-        password: ""
-    }
+    const stateForm = { email: "", password: "" }
 
     const [data, setData] = useState(initialState)
     const [dataform, setDataForm] = useState(stateForm)
