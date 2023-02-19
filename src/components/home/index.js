@@ -3,7 +3,7 @@ import React, {useContext, useEffect} from 'react'
 import {BiSearch} from "react-icons/bi";
 import { AuthContext } from '../../App';
 import {Navigate, useNavigate} from 'react-router-dom';
-import Sidebar from "../sidebar";
+import Sidebar from "../../template/sidebar";
 import Login from "../auth/index";
 
 export default function Home() {
