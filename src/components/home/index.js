@@ -4,10 +4,12 @@ import {BiSearch} from "react-icons/bi";
 import { AuthContext } from '../../App';
 import {Navigate, useNavigate} from 'react-router-dom';
 import Sidebar from "../../template/sidebar";
-import Login from "../auth/login";
 
 export default function Home() {
+
     const {state} = useContext(AuthContext);
+
+    console.log("cek state :" + state.isAuthenticated)
 
     useEffect (() => {
         if (localStorage.getItem('token')) {
