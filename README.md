@@ -4,7 +4,7 @@ Buat teman-teman yang ingin belajar, silahkan mengambilnya, free.
 
 dan untuk teman-teman yang ingin sekedar support atau membelikan saya kopi bisa ke:\
 Saweria: https://saweria.co/nugraha17 \
-Buyme Coffe: https://www.buymeacoffee.com/rfajarnugrx \
+Buyme Coffe: https://www.buymeacoffee.com/nunutech401
 
 ## Tentang Project CS-TIKETING-RJS
 
