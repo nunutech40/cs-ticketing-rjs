@@ -3,6 +3,7 @@ import axios from 'axios'
 import Logo from "../../assets/logo.svg";
 import { AuthContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import BugReportLogo from "../../assets/bugreport.png";
 const api = 'http://127.0.0.1:8000/api/';
 
 
@@ -17,14 +18,11 @@ export default function Login(props) {
         }
     }, []);
 
-
     const initialState = { isSubmitting: false, errorMessage: null}
-
     const stateForm = { email: "", password: "" }
 
     const [data, setData] = useState(initialState)
     const [dataform, setDataForm] = useState(stateForm)
-
 
     const handleInputChange = event => {
         setDataForm({
@@ -70,7 +68,6 @@ export default function Login(props) {
                     })
                 }
                 else {
-                    console.log("cek success else")
                     setData({
                         ...data,
                         isSubmitting: false,
@@ -85,66 +82,76 @@ export default function Login(props) {
             })
     }
 
-    return (
-        <section className="grid h-screen place-items-center bg-gray-200">
-            <div className="container py-12 px-12">
-                <div className="flex justify-center items-center flex-wrap gap-6 text-gray-800">
+    function goToRegister() {
+        history('/register');
+    }
 
-                    <div className="block bg-white shadow-lg rounded-lg">
-                        <div className="flex flex-wrap mt-8">
-                            <div className="w-full px-8">
-                                <div className="text-center">
-                                    <img
-                                        className="mx-auto w-48"
-                                        src={Logo}
-                                        alt="logo"
-                                    />
-                                    <h4 className="text-xl mt-1 mb-12 pb-1">Selamat Datang Di POS ReactJS</h4>
-                                </div>
-                                <form onSubmit={handleFormSubmit}>
-                                    <p>Please Login to your account</p>
-                                    <div className="mb-4">
-                                        <input
-                                            type="email"
-                                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                            id="idusername"
-                                            placeholder="Username"
-                                            name="email"
-                                            onChange={handleInputChange}
-                                            value={dataform.email}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <input
-                                            type="password"
-                                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                            id="idpassword"
-                                            placeholder="Password"
-                                            name="password"
-                                            onChange={handleInputChange}
-                                            value={dataform.password}
-                                        />
-                                    </div>
-                                    <div className="text-center pt-1 mb-12 pb-1">
-                                        <button
-                                            className="bg-emerald-600 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
-                                            type="submit"
-                                            data-mdb-ripple="true"
-                                            data-mdb-ripple-color="light"
-                                            disabled={data.isSubmitting}>
-                                            {data.isSubmitting ? (
-                                                    "..Loading"
-                                                ) :
-                                                (
-                                                    "Login"
-                                                )
-                                            }
-                                        </button>
-                                        <a className="text-gray-500" href="#!">Forgot password?</a>
-                                    </div>
-                                </form>
+    return (
+        <section>
+            <div className="h-screen md:flex">
+                <div className="relative overflow-hidden md:flex w-2/3 bg-white justify-around items-center hidden">
+                    <img
+                        className="max-w-lg"
+                        src={BugReportLogo}
+                        alt="logo"
+                    />
+                </div>
+
+                <div className="flex md:w-1/3 justify-left items-center">
+                    <div className="w-full px-8">
+
+                        <h1 className="text-gray-800 font-bold text-2xl mb-6">Log In</h1>
+                        <p className="text-sm font-normal text-gray-600 mb-6">Wellcome back, report and fix your bug</p>
+                        <form onSubmit={handleFormSubmit}>
+
+                            <div className="mb-4 max-w-sm">
+                                <label className="block text-grey-darker text-sm mb-2" htmlFor="username">
+                                    Username
+                                </label>
+                                <input
+                                    type="email"
+                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    id="idusername"
+                                    placeholder="Username"
+                                    name="email"
+                                    onChange={handleInputChange}
+                                    value={dataform.email}
+                                />
                             </div>
-                        </div>
+                            <div className="mb-4 max-w-sm">
+                                <label className="block text-grey-darker text-sm mb-2" htmlFor="username">
+                                    Password
+                                </label>
+                                <input
+                                    type="password"
+                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    id="idpassword"
+                                    placeholder="Password"
+                                    name="password"
+                                    onChange={handleInputChange}
+                                    value={dataform.password}
+                                />
+                            </div>
+                            <div className="mb-4 max-w-sm">
+                                <button
+                                    className="bg-sky-500 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+                                    type="submit"
+                                    data-mdb-ripple="true"
+                                    data-mdb-ripple-color="light"
+                                    disabled={data.isSubmitting}>
+                                    {data.isSubmitting ? (
+                                            "..Loading"
+                                        ) :
+                                        (
+                                            "Sig In"
+                                        )
+                                    }
+                                </button>
+                                <div>
+                                    <p>Don't have an account?<span className="text-blue-700" onClick={goToRegister}> Sign Up</span></p>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
                 </div>
