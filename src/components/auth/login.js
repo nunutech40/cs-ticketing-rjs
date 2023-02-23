@@ -34,7 +34,6 @@ export default function Login(props) {
 
     }
     const handleFormSubmit = event => {
-        console.log("cek submit")
         event.preventDefault()
 
         setData({

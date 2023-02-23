@@ -4,7 +4,15 @@ import BugReportLogo from "../../assets/bugreport.png";
 
 const api = 'http://127.0.0.1:8000/api/';
 
+
+
 export default function Register(props) {
+
+    const history = useNavigate();
+
+    function goToLogin() {
+        history('/login');
+    }
 
     return(
         <section>
@@ -55,7 +63,10 @@ export default function Register(props) {
                             </button>
                         </div>
 
-                        <p>Already Have Account <span className="text-blue-700">Log in?</span></p>
+                        <div>
+                            <p>Already Have Account <span className="text-blue-700" onClick={goToLogin}>Log in?</span></p>
+                        </div>
+
                     </form>
                 </div>
             </div>
