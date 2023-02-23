@@ -18,14 +18,11 @@ export default function Login(props) {
         }
     }, []);
 
-
     const initialState = { isSubmitting: false, errorMessage: null}
-
     const stateForm = { email: "", password: "" }
 
     const [data, setData] = useState(initialState)
     const [dataform, setDataForm] = useState(stateForm)
-
 
     const handleInputChange = event => {
         setDataForm({
@@ -71,7 +68,6 @@ export default function Login(props) {
                     })
                 }
                 else {
-                    console.log("cek success else")
                     setData({
                         ...data,
                         isSubmitting: false,
