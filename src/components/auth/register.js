@@ -18,8 +18,8 @@ export default function Register(props) {
                 </div>
                 <div className="flex md:w-1/3 justify-left items-center">
                     <form className="bg-white  w-full">
-                        <h1 className="text-gray-800 font-bold text-2xl mb-1">Sing Up</h1>
-                        <p className="text-sm font-normal text-gray-600 mb-7">Create your Bug Report Account</p>
+                        <h1 className="text-gray-800 font-bold text-2xl mb-6">Sing Up</h1>
+                        <p className="text-sm font-normal text-gray-600 mb-6">Create your Bug Report Account</p>
 
                         <div className="mb-4 max-w-sm">
                             <label className="block text-grey-darker text-sm mb-2" htmlFor="fullness">
