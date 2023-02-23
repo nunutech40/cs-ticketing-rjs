@@ -3,6 +3,7 @@ import React, { useReducer, createContext } from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/home";
 import Login from "./components/auth/login";
+import Register from "./components/auth/register";
 
 //Context
 export const AuthContext = createContext()
@@ -59,6 +60,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="login" element={<Login/>}/>
+                        <Route path="register" element={<Register/>}/>
                     </Routes>
                 </div>
             </AuthContext.Provider>
