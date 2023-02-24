@@ -12,10 +12,6 @@ export default function Sidebar(props, {defaultActive}) {
 
     const menu = [
         {name:"Home", icon:<BiHomeAlt/>, route: "/"},
-        {name:"Order", icon:<MdOutlineCallToAction/>, route: "/order"},
-        {name:"Produk", icon:<RiProductHuntLine/>, route: "/product"},
-        {name:"Keuangan", icon:<MdOutlineMonetizationOn/>, route: "/money"},
-        {name:"Pengaturan", icon:<AiOutlineSetting/>, route: "/setting"},
         {name:"Logout", icon:<AiOutlineLogout/>, route: "/logout"}
     ]
 
