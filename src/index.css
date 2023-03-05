@@ -14,3 +14,18 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+@layer utilities {
+  .h-26px {
+    height: 26px;
+  }
+  .w-26px {
+    width: 26px;
+  }
+  .h-40px {
+    height: 40px;
+  }
+  .w-40px {
+    width: 40px;
+  }
+}

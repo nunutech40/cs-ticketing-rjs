@@ -1,9 +1,9 @@
 
 import React, {useContext, useEffect} from 'react'
-import {BiSearch} from "react-icons/bi";
 import { AuthContext } from '../../App';
 import {Navigate, useNavigate} from 'react-router-dom';
-import Sidebar from "../../template/sidebar";
+import Header from "../../template/header";
+import IconTiket from "../../assets/ic_tiket.svg";
 
 export default function Home() {
 
@@ -24,16 +24,27 @@ export default function Home() {
     }
 
     return (
-        <section className="w-full flex flex-wrap">
-            <Sidebar/>
-            <div className="px-14 flex-1 pt-14">
-                <div className="border border-gray-300 rounded w-full flex py-3 px-3 items-center rounded-xl">
-                    <BiSearch className="mr-2"/>
-                    <input type={"text"} className="flex-1" placeholder="Search"/>
-                </div>
-                <h1>This is home</h1>
-            </div>
+        <section>
+            <Header/>
+            <div className="h-screen md:flex">
 
+                <div className="relative overflow-hidden md:flex flex-1 bg-white justify-around items-center">
+
+                </div>
+
+                <div className="flex w-421 justify-left items-center border-l">
+
+                    <div className="relative self-start">
+                        <img className="max-w-lg" src={IconTiket} alt="logo" />
+                        <button className="absolute h-11 bottom-14 left-6 right-6 bg-blue-500 ml-8 mr-8 text-white rounded-xl hover:bg-blue-600">
+                            <span className="text-2xl mr-3">+</span> <strong>Add Ticket</strong>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
         </section>
+
     )
 }

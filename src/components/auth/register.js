@@ -7,6 +7,7 @@ const api = 'http://127.0.0.1:8000/api/';
 
 export default function Register(props) {
 
+    localStorage.clear()
     const { dispatch } = useContext(AuthContext)
     const history = useNavigate();
 
@@ -15,6 +16,10 @@ export default function Register(props) {
 
     const [dataAct, setDataAct] = useState(initialState);
     const [dataForm, setDataForm] = useState(stateForm);
+    const [testAja, setTestAja] = useState("")
+    useEffect (() => {
+
+    }, []);
 
     // disini ngambil data dari input dan perubahan dari input text
     const handleInputChange = event => {
@@ -22,6 +27,9 @@ export default function Register(props) {
             ...dataForm,
             [event.target.name]: event.target.value,
         })
+
+        console.log("cek dataForm")
+        console.log(dataForm)
     }
 
     function checkMatchPassword(password, correctPassword) {
@@ -56,7 +64,7 @@ export default function Register(props) {
 
         axios.post(api + "auth/register", requestBody, config)
             .then(res => {
-                if (res.data.status === "success") {
+                if (res.data.status === "Success") {
                     dispatch({
                         type: "REGISTER",
                         payload: res.data
@@ -176,6 +184,12 @@ export default function Register(props) {
 
                         <div>
                             <p>Already Have Account <span className="text-blue-700" onClick={goToLogin}>Log in?</span></p>
+                        </div>
+
+                        <div>
+                            <button onClick={() => setTestAja("Hello Dor...")}>
+                                Test Button Here
+                            </button>
                         </div>
 
                     </form>
