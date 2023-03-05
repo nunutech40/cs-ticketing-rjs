@@ -28,8 +28,25 @@ export default function Home() {
             <Header/>
             <div className="h-screen md:flex">
 
-                <div className="relative overflow-hidden md:flex flex-1 bg-white justify-around items-center">
+                <div className="relative self-start overflow-hidden md:flex flex-1 bg-white justify-around items-center">
+                    <div className="w-full mt-8">
+                        <div className="w-full md:flex mx-8">
 
+                            <div className="relative overflow-hidden md:flex w-1/4 bg-white justify-between items-center hidden">
+                                <div className="bg-bg-black-card rounded-2xl w-56 h-56"></div>
+                            </div>
+
+                            <div className="relative overflow-hidden md:flex w-1/4 bg-white justify-between items-center hidden">
+                                <div className="bg-bg-red-card rounded-2xl w-56 h-56"></div>
+                            </div>
+                            <div className="relative overflow-hidden md:flex w-1/4 bg-white justify-between items-center hidden">
+                                <div className="bg-bg-yellow-card rounded-2xl w-56 h-56"></div>
+                            </div>
+                            <div className="relative overflow-hidden md:flex w-1/4 bg-white justify-between items-center hidden">
+                                <div className="bg-bg-blue-card rounded-2xl w-56 h-56"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex w-421 justify-left items-center border-l">
