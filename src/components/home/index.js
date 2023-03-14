@@ -22,8 +22,6 @@ export default function Home() {
     }
 
     function goToNewTicket() {
-
-        console.log("cek newticket")
         history('ticket/add');
     }
 
