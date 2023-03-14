@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/home";
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
+import CreateTicket from "./components/ticket";
 
 //Context
 export const AuthContext = createContext()
@@ -61,6 +62,7 @@ function App() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
+                        <Route path="ticket/add" element={<CreateTicket/>}/>
                     </Routes>
                 </div>
             </AuthContext.Provider>
