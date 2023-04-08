@@ -1,6 +1,5 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
-import Logo from "../../assets/logo.svg";
 import { AuthContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import BugReportLogo from "../../assets/bugreport.png";

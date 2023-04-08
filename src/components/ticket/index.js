@@ -1,10 +1,10 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from "../../template/header";
 import IcCreateUser from "../../assets/ic_create_user.svg";
 import ArrowLeft from "../../assets/arrowleft2.svg";
 import ArrowDown from "../../assets/arrow_down.svg";
 import Calender from "../../assets/calendar.png";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTicket() {
 
@@ -16,7 +16,7 @@ export default function CreateTicket() {
 
     return (
         <section>
-            <Header/>
+            <Header />
             <div className="h-screen md:flex">
 
                 <div className="w-full p-8">
@@ -25,9 +25,9 @@ export default function CreateTicket() {
 
                         <div className="flex items-left w-full">
                             <div className="mr-2 bg-sky-700 rounded-xl p-2"
-                                 onClick={backToHome}
+                                onClick={backToHome}
                             >
-                                <img className="max-w-lg" src={ArrowLeft} alt="back"  />
+                                <img className="max-w-lg" src={ArrowLeft} alt="back" />
                             </div>
                             <div className="flex items-center justify-center">
                                 <p className="text-gray-800 font-medium ml-2 text-black font-bold text-2xl">Create
@@ -45,14 +45,14 @@ export default function CreateTicket() {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="text"
+                                    type="date"
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     id="txtDate"
                                     placeholder="Date/Month/Years"
                                     name="txtDate"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <img className="max-w-lg" src={Calender} alt="back"  />
+                                    <img className="max-w-lg" src={Calender} alt="back" />
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@ export default function CreateTicket() {
                                     name="txtCs"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown"  />
+                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@ export default function CreateTicket() {
                                     name="txtAssignTask"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown"  />
+                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ export default function CreateTicket() {
                                     name="txtTaskPriority"
                                 />
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown"  />
+                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
                                 </div>
                             </div>
                         </div>
