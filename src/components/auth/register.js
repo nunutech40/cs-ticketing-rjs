@@ -1,8 +1,8 @@
-import React, {Fragment, useContext, useEffect, useState} from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import BugReportLogo from "../../assets/bugreport.png";
 import axios from "axios";
-import {AuthContext} from "../../App";
+import { AuthContext } from "../../App";
 const api = 'http://127.0.0.1:8000/api/';
 
 export default function Register(props) {
@@ -11,13 +11,13 @@ export default function Register(props) {
     const { dispatch } = useContext(AuthContext)
     const history = useNavigate();
 
-    const initialState = { isSubmitting: false, errorMessage: null}
+    const initialState = { isSubmitting: false, errorMessage: null }
     const stateForm = { fullName: "", email: "", role: "CS", password: "", verifyPassword: "" }
 
     const [dataAct, setDataAct] = useState(initialState);
     const [dataForm, setDataForm] = useState(stateForm);
     const [testAja, setTestAja] = useState("")
-    useEffect (() => {
+    useEffect(() => {
 
     }, []);
 
@@ -97,7 +97,7 @@ export default function Register(props) {
         history('/login');
     }
 
-    return(
+    return (
         <section>
             <div className="h-screen md:flex">
                 <div className="relative overflow-hidden md:flex w-2/3 bg-white justify-around items-center hidden">
@@ -115,15 +115,15 @@ export default function Register(props) {
 
                         <div className="mb-4 max-w-sm">
                             <label className="block text-grey-darker text-sm mb-2" htmlFor="fullness">
-                            Full Name
-                        </label>
+                                Full Name
+                            </label>
                             <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                   id="fullName"
-                                   type="text"
-                                   placeholder="Full Name"
-                                   name="fullName"
-                                   onChange={handleInputChange}
-                                   value={dataForm.fullName}
+                                id="fullName"
+                                type="text"
+                                placeholder="Full Name"
+                                name="fullName"
+                                onChange={handleInputChange}
+                                value={dataForm.fullName}
                             />
                         </div>
                         <div className="mb-4 max-w-sm">
@@ -131,25 +131,43 @@ export default function Register(props) {
                                 Email
                             </label>
                             <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                   id="email"
-                                   type="email"
-                                   placeholder="@gmail"
-                                   name="email"
-                                   onChange={handleInputChange}
-                                   value={dataForm.email}
+                                id="email"
+                                type="email"
+                                placeholder="@gmail"
+                                name="email"
+                                onChange={handleInputChange}
+                                value={dataForm.email}
                             />
                         </div>
+
+                        <div className="mb-4 max-w-sm">
+                            <label className="block text-grey-darker text-sm mb-2" htmlFor="role">
+                                Role
+                            </label>
+                            <select
+                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                id="role"
+                                name="role"
+                                value={dataForm.role}
+                                onChange={handleInputChange}
+                            >
+                                <option value="CS">Customer Service</option>
+                                <option value="Tech">Tech</option>
+                            </select>
+                        </div>
+
+
                         <div className="mb-4 max-w-sm">
                             <label className="block text-grey-darker text-sm mb-2" htmlFor="fullness">
                                 Password
                             </label>
                             <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                   id="password"
-                                   type="password"
-                                   placeholder="Password"
-                                   name="password"
-                                   onChange={handleInputChange}
-                                   value={dataForm.password}
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                onChange={handleInputChange}
+                                value={dataForm.password}
                             />
                         </div>
                         <div className="mb-6 max-w-sm">
@@ -157,27 +175,27 @@ export default function Register(props) {
                                 Correct Password
                             </label>
                             <input className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                   id="verifyPassword"
-                                   type="password"
-                                   placeholder="Password"
-                                   name="verifyPassword"
-                                   onChange={handleInputChange}
-                                   value={dataForm.verifyPassword}
+                                id="verifyPassword"
+                                type="password"
+                                placeholder="Password"
+                                name="verifyPassword"
+                                onChange={handleInputChange}
+                                value={dataForm.verifyPassword}
                             />
                         </div>
                         <div className="mb-4 max-w-sm">
                             <button type="submit"
-                                    className="bg-sky-500 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
-                                    data-mdb-ripple="true"
-                                    data-mdb-ripple-color="light"
-                                    disabled={dataAct.isSubmitting}>
-                                    {dataAct.isSubmitting ? (
-                                            "..Loading"
-                                        ) :
-                                        (
-                                            "Register"
-                                        )
-                                    }
+                                className="bg-sky-500 inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+                                data-mdb-ripple="true"
+                                data-mdb-ripple-color="light"
+                                disabled={dataAct.isSubmitting}>
+                                {dataAct.isSubmitting ? (
+                                    "..Loading"
+                                ) :
+                                    (
+                                        "Register"
+                                    )
+                                }
 
                             </button>
                         </div>
