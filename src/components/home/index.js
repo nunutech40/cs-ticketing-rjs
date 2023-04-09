@@ -25,7 +25,7 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('token')) {    
             state.isAuthenticated = true
         } else {
             state.isAuthenticated = false

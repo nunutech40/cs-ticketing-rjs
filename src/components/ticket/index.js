@@ -13,24 +13,23 @@ export default function CreateTicket() {
 
     const history = useNavigate();
     const { state } = useContext(AuthContext);
-    const [userCS, setUserCS] = useState([]);
+    const [userTech, setUserTech] = useState([]);
 
     useEffect(() => {
         var token = localStorage.getItem('token');
         token = token.replace(/"/g, '');
     
-        console.log(`cek token ${token}`)
         if (token) {
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            axios.get(API_BASE_URL + 'users?role=cs', config)
+            axios.get(API_BASE_URL + 'users?role=tech', config)
     
                 .then((response) => {
                     if (response.data.status === "success") {
-                        setUserCS(response.data.data);
+                        setUserTech(response.data.data);
                     }
                     state.isAuthenticated = true;
                 })
@@ -100,27 +99,6 @@ export default function CreateTicket() {
                             </div>
                         </div>
 
-                        <div className="mb-4 w-full">
-                            <label className="block text-grey-darker text-sm mb-2" htmlFor="lbCs">
-                                CS Name
-                            </label>
-                            <div className="relative">
-                                <select
-                                    className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    id="txtCs"
-                                    name="txtCs"
-                                >
-                                    {userCS.map((cs) => (
-                                        <option key={cs.id} value={cs.id}>
-                                            {cs.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
-                                </div>
-                            </div>
-                        </div>
 
                         <div className="mb-4 w-full">
                             <label className="block text-grey-darker text-sm mb-2" htmlFor="lbTitleTask">
@@ -153,17 +131,21 @@ export default function CreateTicket() {
                         </div>
 
                         <div className="mb-4 w-full">
-                            <label className="block text-grey-darker text-sm mb-2" htmlFor="lbAssignTask">
+                            <label className="block text-grey-darker text-sm mb-2" htmlFor="lbCs">
                                 Assign
                             </label>
                             <div className="relative">
-                                <input
-                                    type="text"
+                                <select
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                    id="txtAssignTask"
-                                    placeholder="Assign To"
-                                    name="txtAssignTask"
-                                />
+                                    id="txtCs"
+                                    name="txtCs"
+                                >
+                                    {userTech.map((tech) => (
+                                        <option key={tech.id} value={tech.id}>
+                                            {tech.name}
+                                        </option>
+                                    ))}
+                                </select>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
                                 </div>
