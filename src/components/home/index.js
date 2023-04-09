@@ -33,6 +33,7 @@ export default function Home() {
     }, []);
 
     if (!state.isAuthenticated) {
+        localStorage.clear()
         return <Navigate to="/login" />
     }
 

@@ -1,14 +1,57 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from "../../template/header";
 import IcCreateUser from "../../assets/ic_create_user.svg";
 import ArrowLeft from "../../assets/arrowleft2.svg";
 import ArrowDown from "../../assets/arrow_down.svg";
 import Calender from "../../assets/calendar.png";
-import { useNavigate } from "react-router-dom";
+import {Navigate, useNavigate } from "react-router-dom";
+import API_BASE_URL from '../../config/config';
+import { AuthContext } from '../../App';
+import axios from 'axios';
 
 export default function CreateTicket() {
 
     const history = useNavigate();
+    const { state } = useContext(AuthContext);
+    const [userCS, setUserCS] = useState([]);
+
+    useEffect(() => {
+        var token = localStorage.getItem('token');
+        token = token.replace(/"/g, '');
+    
+        console.log(`cek token ${token}`)
+        if (token) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            axios.get(API_BASE_URL + 'users?role=cs', config)
+    
+                .then((response) => {
+                    if (response.data.status === "success") {
+                        setUserCS(response.data.data);
+                    }
+                    state.isAuthenticated = true;
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 401) {
+                        localStorage.removeItem('token');
+                        state.isAuthenticated = false;
+                    } else {
+                        console.log(error);
+                    }
+                });
+    
+        } else {
+            state.isAuthenticated = false;
+        }
+    }, []);
+
+    
+    if (!state.isAuthenticated) {
+        return <Navigate to="/login" />
+    }
 
     function backToHome() {
         history('/');
@@ -62,13 +105,17 @@ export default function CreateTicket() {
                                 CS Name
                             </label>
                             <div className="relative">
-                                <input
-                                    type="text"
+                                <select
                                     className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     id="txtCs"
-                                    placeholder="CS"
                                     name="txtCs"
-                                />
+                                >
+                                    {userCS.map((cs) => (
+                                        <option key={cs.id} value={cs.id}>
+                                            {cs.name}
+                                        </option>
+                                    ))}
+                                </select>
                                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                     <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
                                 </div>
