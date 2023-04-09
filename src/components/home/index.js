@@ -12,6 +12,7 @@ export default function Home() {
     const history = useNavigate();
 
     const [activeMenu, setActiveMenu] = useState('dashboard');
+    const [loading, setLoading] = useState(true);
     
     const renderContent = () => {
         if (activeMenu === 'ticket') {
@@ -31,7 +32,12 @@ export default function Home() {
         } else {
             state.isAuthenticated = false
         }
+        setLoading(false);
     }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     if (!state.isAuthenticated) {
         localStorage.clear()

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useReducer, createContext } from 'react';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
@@ -14,11 +14,21 @@ const initialState = {
     isAuthenticated: false,
     token: null,
     tokenExpires: 0,
-    role: "user"
+    role: "user",
+};
+
+// Check if a token exists in localStorage and update the initial state accordingly
+const storedToken = localStorage.getItem("token");
+
+if (storedToken) {
+    initialState.isAuthenticated = true;
+    initialState.token = storedToken;
+    initialState.tokenExpires = 3600; // You can also store token expiration time in localStorage if needed
+    initialState.role = "user"; // If you need to handle user roles, you should store it in localStorage as well
 }
 
 const reducer = (state, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case "LOGIN":
             localStorage.setItem("token", JSON.stringify(action.payload.data.data.access_token))
             return {
@@ -26,7 +36,7 @@ const reducer = (state, action) => {
                 isAuthenticated: true,
                 token: localStorage.getItem("token"),
                 tokenExpires: 3600,
-                role: "admin"
+                role: "user"
             }
         case "LOGOUT":
             localStorage.clear()
@@ -66,7 +76,6 @@ function App() {
                     </Routes>
                 </div>
             </AuthContext.Provider>
-
         </Router>
     );
 }
