@@ -14,22 +14,22 @@ export default function Header({ activeMenu, setActiveMenu }) {
             <div className="flex justify-center items-center  ml-9">
                 <a
                     href="#"
-                    className={`text-gray-400 py-6 px-6 hover:text-blue-400 border-b-2 border-transparent ${
-                        activeMenu === 'dashboard' ? 'border-blue-400' : ''
-                    }`}
                     onClick={() => setActiveMenu('dashboard')}
+                    className={`text-gray-400 py-6 px-6 border-b-2 ${activeMenu === 'dashboard' ? 'border-blue-400 text-blue-400' : 'border-transparent'
+                        }`}
                 >
                     Dashboard
                 </a>
                 <a
                     href="#"
-                    className={`text-gray-400 py-6 px-6 hover:text-blue-400 border-b-2 border-transparent ${
-                        activeMenu === 'ticket' ? 'border-blue-400' : ''
-                    }`}
                     onClick={() => setActiveMenu('ticket')}
+                    className={`text-gray-400 py-6 px-6 border-b-2 ${activeMenu === 'ticket' ? 'border-blue-400 text-blue-400' : 'border-transparent'
+                        }`}
                 >
                     Ticket
                 </a>
+
+
             </div>
 
             <div className="flex items-center mr-4">

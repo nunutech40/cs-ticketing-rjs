@@ -12,6 +12,7 @@ export default function Home() {
     const history = useNavigate();
 
     const [activeMenu, setActiveMenu] = useState('dashboard');
+    
     const renderContent = () => {
         if (activeMenu === 'ticket') {
             return <Ticket/>
