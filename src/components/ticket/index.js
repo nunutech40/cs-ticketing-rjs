@@ -48,19 +48,21 @@ export default function CreateTicket() {
             .then((response) => {
                 if (response.data.status === "success") {
                     notify();
-                    setFormData({
-                        date_created: "",
-                        title: "",
-                        description: "",
-                        assigned_to: "",
-                        priority: selectedPriority[0],
-                    });
+                    navigate('/');
                 } else {
                     // Handle the error, e.g., show an error message
                 }
             })
             .catch((error) => {
                 // Handle the error, e.g., show an error message
+            });
+
+            setFormData({
+                date_created: "",
+                title: "",
+                description: "",
+                assigned_to: "",
+                priority: selectedPriority[0],
             });
     }
 
@@ -267,7 +269,6 @@ export default function CreateTicket() {
                     </div>
 
                 </div>
-                <ToastContainer autoClose={3000} />
             </div>
         </section>
 

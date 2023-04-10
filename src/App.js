@@ -5,6 +5,8 @@ import Home from "./components/home";
 import Login from "./components/auth/login";
 import Register from "./components/auth/register";
 import CreateTicket from "./components/ticket";
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 //Context
 export const AuthContext = createContext()
@@ -74,9 +76,12 @@ function App() {
                         <Route path="register" element={<Register/>}/>
                         <Route path="ticket/add" element={<CreateTicket/>}/>
                     </Routes>
+                    
                 </div>
             </AuthContext.Provider>
+            <ToastContainer autoClose={3000} />
         </Router>
+        
     );
 }
 
