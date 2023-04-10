@@ -3,28 +3,36 @@ import IcCreateUser from "../../assets/ic_create_user.svg";
 import ArrowLeft from "../../assets/arrowleft2.svg";
 import ArrowDown from "../../assets/arrow_down.svg";
 import Calender from "../../assets/calendar.png";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import API_BASE_URL from '../../config/config';
 import { AuthContext } from '../../App';
 import axios from 'axios';
 
 export default function CreateTicket() {
 
+    const history = useNavigate();
+
     const { state } = useContext(AuthContext);
     const [userTech, setUserTech] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const selectedPriority = ["no priority", "low", "medium", "high"];
 
     const [formData, setFormData] = useState({
-        date: "",
+        date_created: "",
         title: "",
         description: "",
-        assignee: "",
-        priority: "",
+        assigned_to: "",
+        priority: selectedPriority[0],
     });
+
+    const handlePriorityChange = (event) => {
+        const priorityName = event.target.value;
+        setFormData({ ...formData, priority: priorityName.toLowerCase() });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your logic for creating a ticket here
         var token = localStorage.getItem('token');
         token = token.replace(/"/g, '');
 
@@ -36,10 +44,10 @@ export default function CreateTicket() {
         };
 
         axios
-            .post(API_BASE_URL + "tickets", formData, config)
+            .post(API_BASE_URL + "tickets/add", formData, config)
             .then((response) => {
                 if (response.data.status === "success") {
-                    // Handle the success, e.g., navigate to another page or show a success message
+                    setShowModal(true);
                 } else {
                     // Handle the error, e.g., show an error message
                 }
@@ -48,7 +56,6 @@ export default function CreateTicket() {
                 // Handle the error, e.g., show an error message
             });
     }
-
 
     useEffect(() => {
         var token = localStorage.getItem('token');
@@ -65,6 +72,15 @@ export default function CreateTicket() {
                 .then((response) => {
                     if (response.data.status === "success") {
                         setUserTech(response.data.data);
+
+                        const techUsers = response.data.data;
+                        if (techUsers !== null && techUsers.length > 0) {
+                            const firstTechUser = techUsers[0];
+                            setFormData((prevState) => ({
+                                ...prevState,
+                                assigned_to: firstTechUser.id
+                            }));
+                        }
                     }
                     state.isAuthenticated = true;
                 })
@@ -84,13 +100,17 @@ export default function CreateTicket() {
         setLoading(false)
     }, []);
 
-
     if (!state.isAuthenticated) {
         return <Navigate to="/login" />
     }
 
     if (loading) {
         return <div>Loading...</div>;
+    }
+
+    const handleModal = () => {
+        setShowModal(false);
+        window.location.reload();
     }
 
 
@@ -129,7 +149,7 @@ export default function CreateTicket() {
                                         id="txtDate"
                                         placeholder="Date/Month/Years"
                                         name="txtDate"
-                                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                        onChange={(e) => setFormData({ ...formData, date_created: e.target.value })}
                                     />
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                         <img className="max-w-lg" src={Calender} alt="back" />
@@ -179,7 +199,7 @@ export default function CreateTicket() {
                                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                         id="txtCs"
                                         name="txtCs"
-                                        onChange={(e) => setFormData({ ...formData, assignee: e.target.value })}
+                                        onChange={(e) => setFormData({ ...formData, assigned_to: e.target.value })}
                                     >
                                         {userTech.map((tech) => (
                                             <option key={tech.id} value={tech.id}>
@@ -189,7 +209,7 @@ export default function CreateTicket() {
 
                                     </select>
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
+                                        <img className="max-w-lg ml-2" src={ArrowDown} alt="arrowDown" />
                                     </div>
                                 </div>
                             </div>
@@ -199,16 +219,22 @@ export default function CreateTicket() {
                                     Task Priority
                                 </label>
                                 <div className="relative">
-                                    <input
-                                        type="text"
+                                    <select
                                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                        id="txtTaskPriority"
-                                        placeholder="Priority"
-                                        name="txtTaskPriority"
-                                        onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                                    />
+                                        id="priority"
+                                        name="priority"
+                                        value={formData.priority}
+                                        onChange={handlePriorityChange}
+                                    >
+                                        {selectedPriority.map((priority, index) => (
+                                            <option key={index} value={priority}>
+                                                {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                                            </option>
+                                        ))}
+
+                                    </select>
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                        <img className="max-w-lg" src={ArrowDown} alt="arrowDown" />
+                                        <img className="max-w-lg ml-2" src={ArrowDown} alt="arrowDown" />
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +248,15 @@ export default function CreateTicket() {
                             </div>
 
                         </form>
+
+                        {showModal && (
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <p>Ticket added successfully.</p>
+                                    <button onClick={handleModal}>OK</button>
+                                </div>
+                            </div>
+                        )}
 
                     </div>
 
