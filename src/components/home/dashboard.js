@@ -13,7 +13,6 @@ import { AuthContext } from '../../App';
 
 const Dashboard = (userProfile) => {
 
-
     const { state } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
 
