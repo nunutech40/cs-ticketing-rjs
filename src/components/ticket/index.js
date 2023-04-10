@@ -6,17 +6,17 @@ import Calender from "../../assets/calendar.png";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import API_BASE_URL from '../../config/config';
 import { AuthContext } from '../../App';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
 
 export default function CreateTicket() {
 
-    const history = useNavigate();
-
     const { state } = useContext(AuthContext);
     const [userTech, setUserTech] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [showModal, setShowModal] = useState(false);
     const selectedPriority = ["no priority", "low", "medium", "high"];
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         date_created: "",
@@ -47,13 +47,22 @@ export default function CreateTicket() {
             .post(API_BASE_URL + "tickets/add", formData, config)
             .then((response) => {
                 if (response.data.status === "success") {
-                    setShowModal(true);
+                    notify();
+                    navigate('/');
                 } else {
                     // Handle the error, e.g., show an error message
                 }
             })
             .catch((error) => {
                 // Handle the error, e.g., show an error message
+            });
+
+            setFormData({
+                date_created: "",
+                title: "",
+                description: "",
+                assigned_to: "",
+                priority: selectedPriority[0],
             });
     }
 
@@ -108,10 +117,8 @@ export default function CreateTicket() {
         return <div>Loading...</div>;
     }
 
-    const handleModal = () => {
-        setShowModal(false);
-        window.location.reload();
-    }
+
+    const notify = () => toast("Add Ticket Success!");
 
 
     return (
@@ -248,15 +255,6 @@ export default function CreateTicket() {
                             </div>
 
                         </form>
-
-                        {showModal && (
-                            <div className="modal">
-                                <div className="modal-content">
-                                    <p>Ticket added successfully.</p>
-                                    <button onClick={handleModal}>OK</button>
-                                </div>
-                            </div>
-                        )}
 
                     </div>
 
