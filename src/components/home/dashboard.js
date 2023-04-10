@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useContext, useEffect, useState } from 'react'
 import Vector from "../../assets/vector.svg";
 import Vector1 from "../../assets/vector1.svg";
 import Vector2 from "../../assets/vector2.svg";
@@ -7,10 +6,75 @@ import EmojiSad from "../../assets/emojisad.svg";
 import EmojiNormal from "../../assets/emojinormal.svg";
 import EmojiHappy from "../../assets/emojihappy.svg";
 import NotificationIcon from "../../assets/notification.svg"
-import SearchIC from "../../assets/search-normal.svg"
+import SearchIC from "../../assets/search-normal.svg";
+import API_BASE_URL from '../../config/config';
+import axios from 'axios';
+import { AuthContext } from '../../App';
+
+const Dashboard = (userProfile) => {
 
 
-const Dashboard = () => {
+    const { state } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+
+    const [formData, setFormData] = useState({
+        total_tikets: "",
+        total_belum_diproses: "",
+        total_diproses: "",
+        total_done: "",
+    });
+
+    useEffect(() => {
+
+        const userProfile = JSON.parse(localStorage.getItem('profile'))
+
+        var token = localStorage.getItem('token');
+        token = token.replace(/"/g, '');
+
+        if (token) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            axios.get(API_BASE_URL + 'tickets/' + userProfile.id + '/stats', config)
+
+                .then((response) => {
+                    if (response.data.status === "success") {
+                        var data = response.data.data
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            total_tickets: data.total_tickets,
+                            total_belum_di_proses: data.total_belum_di_proses,
+                            total_di_proses: data.total_di_proses,
+                            total_done: data.total_done
+                        }));
+
+                        console.log(`cek formdata: ${formData.total_tikets}`)
+                        console.log(`cek formdata belum dirpsoes: ${formData.total_tikets}`)
+                    }
+                    state.isAuthenticated = true;
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 401) {
+                        localStorage.removeItem('token');
+                        state.isAuthenticated = false;
+                    } else {
+                        console.log(error);
+                    }
+                });
+
+        } else {
+            state.isAuthenticated = false;
+        }
+
+        setLoading(false)
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
             <div className="w-full mt-8">
@@ -40,7 +104,7 @@ const Dashboard = () => {
                             <span className="text-2xl mr-1"></span> <strong> Total Tiket</strong>
                         </button>
                         <div className="bg-bg-black-card rounded-2xl w-56 h-56 flex items-center justify-center">
-                            <span className="text-6xl font-bold text-white">0</span>
+                            <span className="text-6xl font-bold text-white">{formData.total_tickets}</span>
                         </div>
                         <img className="absolute h-20 w-69 bottom-0 left-0 rounded-2xl right-0" src={Vector2} alt="logo" />
                         <img className="absolute h-16 w-49 bottom-0 left-0 rounded-2xl right-0" src={Vector1} alt="logo" />
@@ -54,7 +118,7 @@ const Dashboard = () => {
                             <strong> Ticket Open</strong>
                         </button>
                         <div className="bg-bg-red-card rounded-2xl w-56 h-56 flex items-center justify-center">
-                            <span className="text-6xl font-bold text-white">0</span>
+                            <span className="text-6xl font-bold text-white">{formData.total_belum_di_proses}</span>
                         </div>
                         <button className="absolute w-56 h-14 bottom-0 rounded-b-lg left-0 right-0 bg-gray-50"></button>
                         <button className="absolute w-32 h-8 left-12 bottom-3 rounded-lg left-0 right-0 bg-red-500 rounded-xl hover:bg-red-600">
@@ -68,7 +132,7 @@ const Dashboard = () => {
                             <strong> On Progress</strong>
                         </button>
                         <div className="bg-bg-yellow-card rounded-2xl w-56 h-56 flex items-center justify-center">
-                            <span className="text-6xl font-bold text-white">0</span>
+                            <span className="text-6xl font-bold text-white">{formData.total_di_proses}</span>
                         </div>
                         <button className="absolute w-56 h-14 bottom-0 rounded-b-lg left-0 right-0 bg-gray-50">
                         </button>
@@ -83,7 +147,7 @@ const Dashboard = () => {
                             <span className="text-2xl mr-4"></span> <strong> Solved</strong>
                         </button>
                         <div className="bg-bg-blue-card rounded-2xl w-56 h-56 flex items-center justify-center">
-                            <span className="text-6xl font-bold text-white">0</span>
+                            <span className="text-6xl font-bold text-white">{formData.total_done}</span>
                         </div>
                         <button className="absolute w-56 h-14 bottom-0 rounded-b-lg left-0 right-0 bg-gray-50">
                         </button>

@@ -20,7 +20,7 @@ export default function Home() {
         if (activeMenu === 'ticket') {
             return <Ticket/>
         } else {
-            return <Dashboard />;
+            return <Dashboard/>;
         }
     };
 
