@@ -6,18 +6,34 @@ import Vector2 from "../../assets/vector2.svg";
 import EmojiSad from "../../assets/emojisad.svg";
 import EmojiNormal from "../../assets/emojinormal.svg";
 import EmojiHappy from "../../assets/emojihappy.svg";
+import NotificationIcon from "../../assets/notification.svg"
+import SearchIC from "../../assets/search-normal.svg"
+
 
 const Dashboard = () => {
     return (
         <>
             <div className="w-full mt-8">
 
-                <div className="w-full md:flex mx-8">
+                <div className="flex items-center space-x-4 ml-8 mb-6 mr-8">
+                    <div className="font-bold text-3xl w-1/2">Bug Report</div>
 
+                    <div className="flex items-center space-x-4 w-1/2 justify-end">
+                        <div className="relative w-full">
+                            <img src={SearchIC} className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500 ml-2" alt="logo" />
+                            <input
+                                type="text"
+                                className="pl-8 pr-2 py-1 w-full rounded-xl border border-gray-300 focus:outline-none focus:border-blue-500 ml-1"
+                                placeholder="Search"
+                            />
+                        </div>
 
-                    <div className="px-14 flex-1 pt-14">
-
+                        <div className="inline-flex items-center justify-center p-2 bg-white rounded-xl border border-gray-300">
+                            <img src={NotificationIcon} alt="logo" />
+                        </div>
                     </div>
+                </div>
+                <div className="w-full md:flex mx-8">
 
                     <div className="relative overflow-hidden md:flex w-1/4 bg-white justify-between items-center hidden">
                         <button className="absolute w-36 h-8 bottom-14 left-3 top-4 right-8 bg-neutral-700 ml-8 mr-12 text-white">
