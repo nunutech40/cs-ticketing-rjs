@@ -21,75 +21,70 @@ export default function Home() {
 
     const renderContent = () => {
         if (activeMenu === 'ticket') {
-            return <Ticket />
+            return <Ticket />;
         } else {
             return <Dashboard />;
         }
     };
 
     useEffect(() => {
+        async function checkAuth() {
+            setLoading(true);
 
-        var token = localStorage.getItem('token');
-        token = token.replace(/"/g, '');
+            var token = localStorage.getItem('token');
+            if (!token) {
+                localStorage.clear();
+                dispatch({ type: 'LOGOUT' });
+                setLoading(false);
+                return;
+            } 
 
-        if (token) {
+            token = token.replace(/"/g, '');
+
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            axios.get(API_BASE_URL + 'users/profile', config)
 
-                .then((response) => {
-                    if (response.data.status === "success") {
-                        localStorage.setItem('profile', JSON.stringify(response.data.data[0]));
+            try {
+                const response = await axios.get(API_BASE_URL + 'users/profile', config);
+                if (response.data.status === 'success') {
+                    localStorage.setItem('profile', JSON.stringify(response.data.data[0]));
+                
+                } else {
+                    
+                }
+            } catch (error) {
+                
+            }
 
-                        const userProfile = JSON.parse(localStorage.getItem('profile'))
-                        console.log(`cek data userprofile name: ${userProfile.name}`);
-                        console.log(`cek data userprofile role: ${userProfile.role}`);
-                    }
-                    state.isAuthenticated = true;
-                })
-                .catch((error) => {
-                    if (error.response && error.response.status === 401) {
-                        localStorage.removeItem('token');
-                    } else {
-                        console.log(error);
-                    }
-                    state.isAuthenticated = false;
-                });
-
-        } else {
-            state.isAuthenticated = false;
+            setLoading(false);
         }
 
-        setLoading(false)
-    });
+        checkAuth();
+    }, [dispatch]);
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (!state.isAuthenticated) {
-        localStorage.clear()
-        return <Navigate to="/login" />
-    }
-
     function goToNewTicket() {
         history('ticket/add');
     }
+
     function handleAvatarClick() {
-        toggleSidebar()
+        toggleSidebar();
     }
+
     function toggleSidebar() {
         setIsSidebarVisible(!isSidebarVisible);
     }
 
     function signOut() {
         localStorage.clear();
-        // Update the global isAuthenticated state using the dispatch function
-        dispatch({ type: "LOGOUT" });
-        history("/login");
+        dispatch({ type: 'LOGOUT' });
+        history('/login');
     }
 
     return (
