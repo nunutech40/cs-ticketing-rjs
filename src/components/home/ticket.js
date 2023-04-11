@@ -50,19 +50,19 @@ const Ticket = () => {
                                 className={`py-1 px-4 rounded-t ${activeTab === 0 ?  'bg-gray-200 text-gray-800' : 'bg-red-500 text-white'} border-b-4 ${activeTab === 0 ? 'border-gray-200' : 'border-transparent'}`}
                                 onClick={() => setActiveTab(0)}
                             >
-                                Tab 1
+                                Bug Open
                             </button>
                             <button
                                 className={`py-1 px-4 rounded-t ${activeTab === 1 ?  'bg-gray-200 text-gray-800' : 'bg-yellow-600  text-white'} border-b-4 ${activeTab === 1 ? 'border-gray-200' : 'border-transparent'}`}
                                 onClick={() => setActiveTab(1)}
                             >
-                                Tab 2
+                                On Progress
                             </button>
                             <button
                                 className={`py-1 px-4 rounded-t ${activeTab === 2 ? 'bg-gray-200 text-gray-800' : 'bg-blue-500 text-white' } border-b-4 ${activeTab === 2 ? 'border-gray-200' : 'border-transparent'}`}
                                 onClick={() => setActiveTab(2)}
                             >
-                                Tab 3
+                                Solved
                             </button>
                         </div>
                         <div className="w-full mt-8">
