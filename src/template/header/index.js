@@ -3,7 +3,9 @@ import ICKOMERCE from "../../assets/ic_komerce.svg";
 import MOON from "../../assets/moon.svg";
 import Avatar from "../../assets/avatar.svg";
 
-export default function Header({ activeMenu, setActiveMenu }) {
+export default function Header({ activeMenu, setActiveMenu, userProfile }) {
+
+    
 
     return (
         <header className="text-white flex flex-wrap justify-between items-center border-b border-gray-300">
@@ -34,8 +36,8 @@ export default function Header({ activeMenu, setActiveMenu }) {
 
             <div className="flex items-center mr-4">
                 <div className="flex-wrap background text-right">
-                    <strong className="block items-end text-black">Rizka Fajar Nugraha</strong>
-                    <span className="text-black">Programmer</span>
+                    <strong className="block items-end text-black">{userProfile.name}</strong>
+                    <span className="text-black">{userProfile.role}</span>
                 </div>
 
                 <button>

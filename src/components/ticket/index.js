@@ -56,14 +56,6 @@ export default function CreateTicket() {
             .catch((error) => {
                 // Handle the error, e.g., show an error message
             });
-
-            setFormData({
-                date_created: "",
-                title: "",
-                description: "",
-                assigned_to: "",
-                priority: selectedPriority[0],
-            });
     }
 
     useEffect(() => {

@@ -5,6 +5,8 @@ import Header from "../../template/header";
 import Dashboard from './dashboard';
 import Ticket from './ticket';
 import IconTiket from "../../assets/ic_tiket.svg";
+import axios from 'axios';
+import API_BASE_URL from '../../config/config';
 
 export default function Home() {
 
@@ -18,7 +20,7 @@ export default function Home() {
         if (activeMenu === 'ticket') {
             return <Ticket/>
         } else {
-            return <Dashboard />;
+            return <Dashboard/>;
         }
     };
 
@@ -27,12 +29,42 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {    
-            state.isAuthenticated = true
+
+        var token = localStorage.getItem('token');
+        token = token.replace(/"/g, '');
+        
+        if (token) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            axios.get(API_BASE_URL + 'users/profile', config)
+
+                .then((response) => {
+                    if (response.data.status === "success") {
+                        localStorage.setItem('profile', JSON.stringify(response.data.data[0])); 
+                        
+                        const userProfile = JSON.parse(localStorage.getItem('profile'))
+                        console.log(`cek data userprofile name: ${userProfile.name}`);
+                        console.log(`cek data userprofile role: ${userProfile.role}`);
+                    }
+                    state.isAuthenticated = true;
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 401) {
+                        localStorage.removeItem('token');
+                        state.isAuthenticated = false;
+                    } else {
+                        console.log(error);
+                    }
+                });
+
         } else {
-            state.isAuthenticated = false
+            state.isAuthenticated = false;
         }
-        setLoading(false);
+
+        setLoading(false)
     }, []);
 
     if (loading) {
@@ -46,7 +78,7 @@ export default function Home() {
 
     return (
         <section>
-            <Header activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+            <Header activeMenu={activeMenu} setActiveMenu={setActiveMenu} userProfile={JSON.parse(localStorage.getItem('profile'))} />
             
             <div className="h-screen md:flex">
 
