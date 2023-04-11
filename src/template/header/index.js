@@ -3,9 +3,9 @@ import ICKOMERCE from "../../assets/ic_komerce.svg";
 import MOON from "../../assets/moon.svg";
 import Avatar from "../../assets/avatar.svg";
 
-export default function Header({ activeMenu, setActiveMenu, userProfile }) {
+export default function Header({ activeMenu, setActiveMenu, userProfile, onAvatarClick }) {
 
-    
+
 
     return (
         <header className="text-white flex flex-wrap justify-between items-center border-b border-gray-300">
@@ -40,7 +40,7 @@ export default function Header({ activeMenu, setActiveMenu, userProfile }) {
                     <span className="text-black">{userProfile.role}</span>
                 </div>
 
-                <button>
+                <button onClick={onAvatarClick}>
                     <img className="h-40px w-40px ml-4 mr-4" src={Avatar} alt="logo" />
                 </button>
                 <button>

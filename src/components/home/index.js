@@ -7,32 +7,31 @@ import Ticket from './ticket';
 import IconTiket from "../../assets/ic_tiket.svg";
 import axios from 'axios';
 import API_BASE_URL from '../../config/config';
+import SidebarRight from '../../template/sidebar/rightsidebar';
+import RightSidebar from '../../template/sidebar/rightsidebar';
 
 export default function Home() {
 
-    const { state } = useContext(AuthContext);
+    const { state, dispatch } = useContext(AuthContext);
     const history = useNavigate();
 
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const [loading, setLoading] = useState(true);
-    
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
     const renderContent = () => {
         if (activeMenu === 'ticket') {
-            return <Ticket/>
+            return <Ticket />
         } else {
-            return <Dashboard/>;
+            return <Dashboard />;
         }
     };
-
-    function goToNewTicket() {
-        history('ticket/add');
-    }
 
     useEffect(() => {
 
         var token = localStorage.getItem('token');
         token = token.replace(/"/g, '');
-        
+
         if (token) {
             const config = {
                 headers: {
@@ -43,8 +42,8 @@ export default function Home() {
 
                 .then((response) => {
                     if (response.data.status === "success") {
-                        localStorage.setItem('profile', JSON.stringify(response.data.data[0])); 
-                        
+                        localStorage.setItem('profile', JSON.stringify(response.data.data[0]));
+
                         const userProfile = JSON.parse(localStorage.getItem('profile'))
                         console.log(`cek data userprofile name: ${userProfile.name}`);
                         console.log(`cek data userprofile role: ${userProfile.role}`);
@@ -54,10 +53,10 @@ export default function Home() {
                 .catch((error) => {
                     if (error.response && error.response.status === 401) {
                         localStorage.removeItem('token');
-                        state.isAuthenticated = false;
                     } else {
                         console.log(error);
                     }
+                    state.isAuthenticated = false;
                 });
 
         } else {
@@ -65,7 +64,7 @@ export default function Home() {
         }
 
         setLoading(false)
-    }, []);
+    });
 
     if (loading) {
         return <div>Loading...</div>;
@@ -76,14 +75,36 @@ export default function Home() {
         return <Navigate to="/login" />
     }
 
+    function goToNewTicket() {
+        history('ticket/add');
+    }
+    function handleAvatarClick() {
+        toggleSidebar()
+    }
+    function toggleSidebar() {
+        setIsSidebarVisible(!isSidebarVisible);
+    }
+
+    function signOut() {
+        localStorage.clear();
+        // Update the global isAuthenticated state using the dispatch function
+        dispatch({ type: "LOGOUT" });
+        history("/login");
+    }
+
     return (
         <section>
-            <Header activeMenu={activeMenu} setActiveMenu={setActiveMenu} userProfile={JSON.parse(localStorage.getItem('profile'))} />
-            
+            <Header
+                activeMenu={activeMenu}
+                setActiveMenu={setActiveMenu}
+                userProfile={JSON.parse(localStorage.getItem('profile'))}
+                onAvatarClick={handleAvatarClick}
+            />
+
             <div className="h-screen md:flex">
 
                 <div className="relative self-start overflow-hidden md:flex flex-1 bg-white justify-around items-center">
-                {renderContent()}
+                    {renderContent()}
                 </div>
 
                 <div className="flex w-421 justify-left items-center border-l">
@@ -101,6 +122,15 @@ export default function Home() {
 
                 </div>
             </div>
+
+            {isSidebarVisible && (
+                <RightSidebar
+                    isSidebarVisible={isSidebarVisible}
+                    toggleSidebar={toggleSidebar}
+                    userProfile={JSON.parse(localStorage.getItem('profile'))}
+                    onSignoutClick={signOut} />
+            )}
+
         </section>
 
     )
