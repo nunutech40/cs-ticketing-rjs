@@ -7,6 +7,10 @@ import LowPriorityIcon from "../../assets/low-priority.svg"
 import MediumPriorityIcon from "../../assets/medium-priority.svg"
 import HighPriorityIcon from "../../assets/high-priority.svg"
 import ICClose from "../../assets/close-circle.svg";
+import ElipsisIC from "../../assets/icons8-ellipsis-48.png";
+import PriorityPopup from './menu/PriorityPopup';
+import PopUpStatusMenu from './menu/TicketStatusPopUp';
+
 
 const TicketOpen = () => {
 
@@ -15,12 +19,13 @@ const TicketOpen = () => {
     const userProfile = JSON.parse(localStorage.getItem('profile'))
     const [showPopup, setShowPopup] = useState(false);
     const [selectedId, setSelectedId] = useState('');
+    const [showPopupStatus, setShowPopupStatus] = useState(false);
 
     const [formData, setFormData] = useState({
         assigned_to: userProfile.id,
         status: "belum_di_proses",
     });
-    
+
 
     function renderPriority(priority) {
         if (priority === "no priority") {
@@ -38,10 +43,16 @@ const TicketOpen = () => {
         setSelectedId(id);
         setShowPopup(true);
     }
+    function handleStatusClick(id) {
+        setSelectedId(id);
+        setShowPopupStatus(true);
+    }
 
     function handleMenuItemClick(priority) {
-        console.log(`cek priority: ${priority}`)
         updatePriority(priority, selectedId);
+    }
+    function handleMenuItemClickStatus(status) {
+        updateStatus(status, selectedId);
     }
 
     const [tickets, setTickets] = useState([]);
@@ -82,6 +93,44 @@ const TicketOpen = () => {
         setLoading(false)
     }, []);
 
+    const updateStatus = (status, ticketid) => {
+        var token = localStorage.getItem('token');
+        token = token.replace(/"/g, '');
+
+        const updateData = {
+            status: status,
+        };
+
+        if (token) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            axios.put(API_BASE_URL + 'tickets/update/status/' + ticketid, updateData, config)
+
+                .then((response) => {
+                    if (response.data.status === "success") {
+                        var data = response.data.data
+                        window.location.reload()
+                    }
+                    state.isAuthenticated = true;
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 401) {
+                        localStorage.removeItem('token');
+                        state.isAuthenticated = false;
+                    } else {
+                        console.log(error);
+                    }
+                });
+
+        } else {
+            state.isAuthenticated = false;
+        }
+
+        setLoading(false)
+    }
 
     const updatePriority = (priority, ticketid) => {
         var token = localStorage.getItem('token');
@@ -93,7 +142,7 @@ const TicketOpen = () => {
 
         if (token) {
             const config = {
-                headers: {  
+                headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
@@ -122,7 +171,7 @@ const TicketOpen = () => {
         setLoading(false)
     };
 
-    
+
     return (
         <>
             <div className="relative min-w-full table-auto">
@@ -134,6 +183,7 @@ const TicketOpen = () => {
                             <th className="text-left px-4 py-2">Task</th>
                             <th className="text-left px-4 py-2">Assign To</th>
                             <th className="text-left px-4 py-2">Priority</th>
+                            <th className="text-left px-4 py-2"></th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
@@ -149,57 +199,25 @@ const TicketOpen = () => {
                                 >
                                     {renderPriority(row.priority)}
                                 </td>
+                                <td
+                                    className="px-4 py-2"
+                                    onClick={() => handleStatusClick(row.id)}
+                                >
+                                    <img src={ElipsisIC} alt="logo" />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
-                    {showPopup && (
-                        <div
-                            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-                            onClick={() => setShowPopup(false)}
-                        >
-
-                            <div className="bg-white p-2 rounded-lg shadow-md">
-                                <div className="flex justify-end">
-                                    <img src={ICClose} alt="logo" />
-                                </div>
-
-                                <ul className="space-y-2">
-                                    <li>
-                                        <button
-                                            className="text-left w-full px-4 py-2 hover:bg-gray-100 rounded"
-                                            onClick={() => handleMenuItemClick("no priority")}
-                                        >
-                                            No Priority
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            className="text-left w-full px-4 py-2 hover:bg-gray-100 rounded"
-                                            onClick={() => handleMenuItemClick("low")}
-                                        >
-                                            Low Priority
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            className="text-left w-full px-4 py-2 hover:bg-gray-100 rounded"
-                                            onClick={() => handleMenuItemClick("medium")}
-                                        >
-                                            Medium Priority
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            className="text-left w-full px-4 py-2 hover:bg-gray-100 rounded"
-                                            onClick={() => handleMenuItemClick("high")}
-                                        >
-                                            High Priority
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    )}
+                    {<PriorityPopup
+                        show={showPopup}
+                        onClose={() => setShowPopup(false)}
+                        handleMenuItemClick={handleMenuItemClick}
+                    />}
+                    {<PopUpStatusMenu
+                        show={showPopupStatus}
+                        onClose={() => setShowPopupStatus(false)}
+                        handleMenuItemClick={handleMenuItemClickStatus}
+                    />}
                 </table>
             </div>
 
