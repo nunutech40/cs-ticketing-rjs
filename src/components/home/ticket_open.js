@@ -83,7 +83,7 @@ const TicketOpen = () => {
     }, []);
 
 
-    const updatePriority = (priority, id) => {
+    const updatePriority = (priority, ticketid) => {
         var token = localStorage.getItem('token');
         token = token.replace(/"/g, '');
 
@@ -97,7 +97,7 @@ const TicketOpen = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            axios.put(API_BASE_URL + 'tickets/update/' + id, updateData, config)
+            axios.put(API_BASE_URL + 'tickets/update/priority/' + ticketid, updateData, config)
 
                 .then((response) => {
                     if (response.data.status === "success") {
