@@ -13,6 +13,7 @@ import axios from 'axios';
 export default function CreateTicket() {
 
     const { state } = useContext(AuthContext);
+    const [activeMenu, setActiveMenu] = useState('tickets');
     const [userTech, setUserTech] = useState([]);
     const [loading, setLoading] = useState(true);
     const selectedPriority = ["no priority", "low", "medium", "high"];
