@@ -7,7 +7,6 @@ import Ticket from './ticket';
 import IconTiket from "../../assets/ic_tiket.svg";
 import axios from 'axios';
 import API_BASE_URL from '../../config/config';
-import SidebarRight from '../../template/sidebar/rightsidebar';
 import RightSidebar from '../../template/sidebar/rightsidebar';
 
 export default function Home() {
@@ -19,6 +18,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
+
     const renderContent = () => {
         if (activeMenu === 'ticket') {
             return <Ticket />;
@@ -28,10 +28,16 @@ export default function Home() {
     };
 
     useEffect(() => {
+        var userId = localStorage.getItem('user_id');
+        console.log(`cek data userid: ${userId}`);
+        
         async function checkAuth() {
             setLoading(true);
 
             var token = localStorage.getItem('token');
+            
+
+            
             if (!token) {
                 localStorage.clear();
                 dispatch({ type: 'LOGOUT' });
@@ -48,9 +54,10 @@ export default function Home() {
             };
 
             try {
-                const response = await axios.get(API_BASE_URL + 'users/profile', config);
+                
+                const response = await axios.get(API_BASE_URL + 'users/profile/' + userId, config);
                 if (response.data.status === 'success') {
-                    localStorage.setItem('profile', JSON.stringify(response.data.data[0]));
+                    localStorage.setItem('profile', JSON.stringify(response.data.data));
                 
                 } else {
                     

@@ -17,6 +17,7 @@ export default function Register(props) {
     const [dataAct, setDataAct] = useState(initialState);
     const [dataForm, setDataForm] = useState(stateForm);
     const [testAja, setTestAja] = useState("")
+    
     useEffect(() => {
 
     }, []);

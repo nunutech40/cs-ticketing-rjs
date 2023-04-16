@@ -16,7 +16,7 @@ const initialState = {
     isAuthenticated: false,
     token: null,
     tokenExpires: 0,
-    role: "user",
+    role: "user"
 };
 
 // Check if a token exists in localStorage and update the initial state accordingly
@@ -33,12 +33,16 @@ const reducer = (state, action) => {
     switch (action.type) {
         case "LOGIN":
             localStorage.setItem("token", JSON.stringify(action.payload.data.data.access_token))
+            var userId = JSON.stringify(action.payload.data.user_id);
+            
+            localStorage.setItem('user_id', userId);
             return {
                 ...state,
                 isAuthenticated: true,
                 token: localStorage.getItem("token"),
                 tokenExpires: 3600,
                 role: "user"
+                
             }
         case "LOGOUT":
             localStorage.clear()
