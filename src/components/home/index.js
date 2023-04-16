@@ -36,8 +36,6 @@ export default function Home() {
 
             var token = localStorage.getItem('token');
             
-
-            
             if (!token) {
                 localStorage.clear();
                 dispatch({ type: 'LOGOUT' });

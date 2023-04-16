@@ -132,7 +132,7 @@ const TicketOpen = () => {
                             <th className="text-left px-4 py-2">Tanggal</th>
                             <th className="text-left px-4 py-2">CS</th>
                             <th className="text-left px-4 py-2">Task</th>
-                            <th className="text-left px-4 py-2">Assign</th>
+                            <th className="text-left px-4 py-2">Assign To</th>
                             <th className="text-left px-4 py-2">Priority</th>
                         </tr>
                     </thead>
@@ -140,9 +140,9 @@ const TicketOpen = () => {
                         {tickets.map((row, index) => (
                             <tr key={index} className="border-b border-gray-200">
                                 <td className="px-4 py-2">{"12-12-2022"}</td>
-                                <td className="px-4 py-2">{row.created_by}</td>
+                                <td className="px-4 py-2">{row.updated_by_name}</td>
                                 <td className="px-4 py-2">{row.title}</td>
-                                <td className="px-4 py-2">{row.assigned_to}</td>
+                                <td className="px-4 py-2">{row.assigned_to_name}</td>
                                 <td
                                     className="px-4 py-2"
                                     onClick={() => handlePriorityClick(row.id)}
